@@ -77,11 +77,6 @@
         if (author === filter) {
           comment.element.style.backgroundColor = "red";
         }
-
-        // hide comments complaining about bots
-        if (body.includes("@" + filter)) {
-          comment.element.style.backgroundColor = "red";
-        }
       });
 
       comment.element.setAttribute("data-zentube-parsed", "true")
