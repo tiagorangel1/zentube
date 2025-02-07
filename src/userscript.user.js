@@ -11,7 +11,6 @@
 // @match        https://www.youtube.com/*
 // @grant        GM_setValue
 // @grant        GM_getValue
-// @grant        GM_deleteValue
 // @sandbox      DOM
 // @updateURL    https://raw.githubusercontent.com/tiagorangel/zentube/main/src/userscript.user.js
 // @downloadURL  https://raw.githubusercontent.com/tiagorangel/zentube/main/src/userscript.user.js
@@ -19,35 +18,43 @@
 // ==/UserScript==
 
 (async function () {
-  let filtersCache = JSON.parse(GM_getValue('filters', '{ cached: false }'));
+  let filtersCache = JSON.parse(GM_getValue('filters', '{ "cached": false }'));
 
   const updateFilters = async () => {
-    const [comments, users] = await Promise.all([
-      (async function () {
-        return JSON.parse((await GM.xmlHttpRequest({ url: "https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/comments.json" })).responseText)
-      })(),
-      (async function () {
-        return (await GM.xmlHttpRequest({ url: "https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/users.txt" })).responseText.split("\n")
-      })(),
-    ])
+    try {
+      const [comments, users] = await Promise.all([
+        fetch("https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/comments.json")
+          .then(response => response.json()),
+        fetch("https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/users.txt")
+          .then(response => response.text())
+          .then(text => text.split("\n"))
+      ]);
 
-    const data = {
-      cached: true,
-      comments,
-      users
-    };
+      const data = {
+        cached: true,
+        comments,
+        users
+      };
 
-    await GM.setValue("filters", JSON.stringify(data));
-    filtersCache = data;
+      GM_setValue("filters", JSON.stringify(data));
+      filtersCache = data;
+      console.log("Filters updated:", data);
+    } catch (error) {
+      console.error("Error updating filters:", error);
+    }
   }
 
   if (!filtersCache.cached) {
+    console.log("Initial filter update");
     await updateFilters();
   } else {
+    console.log("Cache exists, updating in background");
     try {
       updateFilters();
-    } catch { }
+    } catch (error) {
+      console.error("Background update failed:", error);
+    }
   }
 
-  console.log("filtersCache", filtersCache)
+  console.log("filtersCache:", filtersCache);
 })();
