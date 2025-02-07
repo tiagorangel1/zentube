@@ -1,3 +1,3 @@
-# TrollBlock
+# ZenTube
 
-TrollBlock filters and source code.
+ZenTube filters and source code.
