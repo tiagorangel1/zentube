@@ -5,10 +5,10 @@
 // @version      0.1.0
 // @description  Clean YouTube comments from hate, spam, harassment and trolls.
 // @author       Tiago Rangel
-// @match        http://youtube.com/*
-// @match        https://youtube.com/*
-// @match        http://www.youtube.com/*
-// @match        https://www.youtube.com/*
+// @match        *://youtube.com/*
+// @match        *://www.youtube.com/*
+// @include      *://www.youtube.com/**
+// @include      *://youtube.com/**
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @sandbox      DOM
