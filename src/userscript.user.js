@@ -55,7 +55,7 @@
     const comments = [...document.querySelectorAll("ytd-comment-view-model")].map((comment) => {
       return {
           element: comment,
-          author: comment.querySelector("h3 #author-text").innerText.replace("@", ""),
+          author: comment.querySelector("h3 #author-text span").innerText.replace("@", "").trim(),
           body: comment.querySelector("#content-text").innerText
       }
     });
