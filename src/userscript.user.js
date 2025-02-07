@@ -69,13 +69,17 @@
 
       filtersCache.comments.forEach(filter => {
         if (body.includes(filter.text)) {
-          comment.element.style.opacity = ".5";
           comment.element.style.backgroundColor = "red";
         }
       });
 
       filtersCache.users.forEach(filter => {
         if (author === filter) {
+          comment.element.style.backgroundColor = "red";
+        }
+
+        // hide comments complaining about bots
+        if (body.includes(filter)) {
           comment.element.style.backgroundColor = "red";
         }
       });
