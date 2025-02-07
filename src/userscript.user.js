@@ -68,13 +68,12 @@
       if (comment.element.getAttribute("data-zentube-parsed")) { return }
 
       filtersCache.comments.forEach(filter => {
-        if (body.includes(filter.text)) {
+        if (body.toLowerCase().includes(filter.text.toLowerCase())) {
           comment.element.style.backgroundColor = "red";
         }
       });
 
       filtersCache.users.forEach(filter => {
-        console.log(author, filter)
         if (author === filter) {
           comment.element.style.backgroundColor = "red";
         }
