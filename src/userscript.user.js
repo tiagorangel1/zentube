@@ -18,43 +18,35 @@
 // ==/UserScript==
 
 (async function () {
-  let filtersCache = JSON.parse(GM_getValue('filters', '{ "cached": false }'));
+  let filtersCache = JSON.parse(GM_getValue('filters', '{ cached: false }'));
 
   const updateFilters = async () => {
-    try {
-      const [comments, users] = await Promise.all([
-        fetch("https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/comments.json")
-          .then(response => response.json()),
-        fetch("https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/users.txt")
-          .then(response => response.text())
-          .then(text => text.split("\n"))
-      ]);
+    const [comments, users] = await Promise.all([
+      (async function () {
+        return JSON.parse((await GM_xmlhttpRequest({ url: "https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/comments.json" })).responseText)
+      })(),
+      (async function () {
+        return (await GM_xmlhttpRequest({ url: "https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/users.txt" })).responseText.split("\n")
+      })(),
+    ])
 
-      const data = {
-        cached: true,
-        comments,
-        users
-      };
+    const data = {
+      cached: true,
+      comments,
+      users
+    };
 
-      GM_setValue("filters", JSON.stringify(data));
-      filtersCache = data;
-      console.log("Filters updated:", data);
-    } catch (error) {
-      console.error("Error updating filters:", error);
-    }
+    GM_setValue("filters", JSON.stringify(data));
+    filtersCache = data;
   }
 
   if (!filtersCache.cached) {
-    console.log("Initial filter update");
     await updateFilters();
   } else {
-    console.log("Cache exists, updating in background");
     try {
       updateFilters();
-    } catch (error) {
-      console.error("Background update failed:", error);
-    }
+    } catch { }
   }
 
-  console.log("filtersCache:", filtersCache);
+  console.log("filtersCache", filtersCache)
 })();
