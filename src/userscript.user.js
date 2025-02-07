@@ -74,6 +74,7 @@
       });
 
       filtersCache.users.forEach(filter => {
+        console.log(author, filter)
         if (author === filter) {
           comment.element.style.backgroundColor = "red";
         }
