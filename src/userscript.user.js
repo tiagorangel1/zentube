@@ -19,7 +19,7 @@
 // ==/UserScript==
 
 (async function () {
-  let filtersCache = JSON.parse(GM_getValue('filters', '{ cached: false }'));
+  let filtersCache = JSON.parse(GM_getValue('filters', '{ "cached": false }'));
 
   const updateFilters = async () => {
     const [comments, users] = await Promise.all([
