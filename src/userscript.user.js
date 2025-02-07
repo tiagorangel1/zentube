@@ -14,8 +14,8 @@
 // @grant        GM_xmlhttpRequest
 // @run-at       document-start
 // @sandbox      DOM
-// @updateURL    https://raw.githubusercontent.com/tiagorangel/zentube/main/src/userscript.user.js
-// @downloadURL  https://raw.githubusercontent.com/tiagorangel/zentube/main/src/userscript.user.js
+// @updateURL    https://github.com/tiagorangel1/zentube/raw/refs/heads/main/src/userscript.user.js
+// @downloadURL  https://github.com/tiagorangel1/zentube/raw/refs/heads/main/src/userscript.user.js
 // @connect      raw.githubusercontent.com
 // ==/UserScript==
 
