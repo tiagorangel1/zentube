@@ -51,5 +51,35 @@
     } catch { }
   }
 
-  console.log("filtersCache", filtersCache)
+  setInterval(function () {
+    const comments = [...document.querySelectorAll("ytd-comment-view-model")].map((comment) => {
+      return {
+          element: comment,
+          author: comment.querySelector("h3 #author-text").innerText.replace("@", ""),
+          body: comment.querySelector("#content-text").innerText
+      }
+    });
+
+    if (!comments) { return };
+
+    comments.forEach(comment => {
+      const { author, body } = comment;
+
+      if (comment.element.getAttribute("data-zentube-parsed")) { return }
+
+      filtersCache.comments.forEach(filter => {
+        if (body.includes(filter.text)) {
+          comment.element.style.opacity = ".5";
+        }
+      });
+
+      filtersCache.users.forEach(filter => {
+        if (author === filter) {
+          comment.element.style.opacity = ".5";
+        }
+      });
+
+      comment.element.setAttribute("data-zentube-parsed", "true")
+    });
+  }, 20)
 })();
