@@ -79,7 +79,7 @@
         }
 
         // hide comments complaining about bots
-        if (body.includes(filter)) {
+        if (body.includes("@" + filter)) {
           comment.element.style.backgroundColor = "red";
         }
       });
