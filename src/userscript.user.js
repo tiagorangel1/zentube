@@ -11,6 +11,7 @@
 // @include      *://youtube.com/**
 // @grant        GM_setValue
 // @grant        GM_getValue
+// @run-at       document-start
 // @sandbox      DOM
 // @updateURL    https://raw.githubusercontent.com/tiagorangel/zentube/main/src/userscript.user.js
 // @downloadURL  https://raw.githubusercontent.com/tiagorangel/zentube/main/src/userscript.user.js
