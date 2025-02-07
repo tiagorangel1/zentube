@@ -26,10 +26,10 @@
   const updateFilters = async () => {
     const [comments, users] = await Promise.all([
       (async function () {
-        return JSON.parse((await GM_xmlhttpRequest({ url: `${API_ENDPOINT}comments.json` })).responseText)
+        return JSON.parse((await GM.xmlHttpRequest({ url: `${API_ENDPOINT}comments.json` })).responseText)
       })(),
       (async function () {
-        return (await GM_xmlhttpRequest({ url: `${API_ENDPOINT}users.txt` })).responseText.split("\n")
+        return (await GM.xmlHttpRequest({ url: `${API_ENDPOINT}users.txt` })).responseText.split("\n")
       })(),
     ])
 
