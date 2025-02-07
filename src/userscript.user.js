@@ -20,15 +20,16 @@
 // ==/UserScript==
 
 (async function () {
+  const API_ENDPOINT = "https://raw.githubusercontent.com/tiagorangel1/zentube/refs/heads/main/dist/filters/";
   let filtersCache = JSON.parse(GM_getValue('filters', '{ "cached": false }'));
 
   const updateFilters = async () => {
     const [comments, users] = await Promise.all([
       (async function () {
-        return JSON.parse((await GM_xmlhttpRequest({ url: "https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/comments.json" })).responseText)
+        return JSON.parse((await GM_xmlhttpRequest({ url: `${API_ENDPOINT}comments.json` })).responseText)
       })(),
       (async function () {
-        return (await GM_xmlhttpRequest({ url: "https://raw.githubusercontent.com/tiagorangel/zentube/main/filters/users.txt" })).responseText.split("\n")
+        return (await GM_xmlhttpRequest({ url: `${API_ENDPOINT}users.txt` })).responseText.split("\n")
       })(),
     ])
 
